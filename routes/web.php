@@ -56,17 +56,23 @@ route::view('cart','ecom/cart');
 
 route::post('cart','App\Http\Controllers\cart@main');
 
-route::get('cartinfo',function(){
-	return request();
+route::group(['middleware'=>'loged'],function(){
+route::get('storeCart', 'App\Http\Controllers\cart@add' );	
+route::get('stock','App\Http\Controllers\cart@stock');
 });
 
 
-route::get('test',function(){
-	//session()->push('arr',2);
 
-	foreach (session()->get('arr') as $v) {
-	 	echo $v . "<br>";
-	 } 
+route::get('cancel',function(){
+	
+$id = request('id');
+
+$tarray = session()->pull('id');
+unset( $tarray[$id] );
+session()->put('id', $tarray);
+
+return redirect('cart');
+
 });
 
 

@@ -44,7 +44,7 @@
 
 @if(session()->get('id'))
 
-@foreach( session()->get('id') as $id )
+@foreach( session()->get('id') as $k => $id )
 <div class="cartProduct" >
 
 <div style="width: 20%;text-align: center;">
@@ -52,7 +52,13 @@
 </div>
 
 <div style="position:absolute;right: 5px;top:0">
-{{ session()->get('price'.$id) }} L.E<br>
+
+<form action="cancel">
+<button style="float: right;" > &#10006; </button><br><br>
+<input  hidden name="id" value="{{ $k }}">
+</form>
+
+{{ session()->get('price'.$id) }} L.E <br>
 </div>
 
 <div style="position:absolute;right: 5px;bottom:0">
@@ -68,15 +74,18 @@ total : <span id="total{{$id}}" >{{ session()->get('price'.$id) }}</span> L.E
 <i style="color: #B12704;"> only {{ session()->get('quantity'.$id) }} left in stock </i><br>
 
 <label>qty :</label>
+
 <select name="qty" id="select{{$id}}" onchange="count('{{session()->get('price'.$id)}}','{{$id}}')" >
 	@for($c=1 ; $c <= session()->get('quantity'.$id) ;$c++)
 	<option value="{{ $c }}">{{$c}}</option>
 	@endfor
 </select><br>
 
-<label>name :</label>{{ session()->get('name'.$id) }}<br>
-<label>id :</label>{{ session()->get('id'.$id) }}<br>
+
+
 </div>
+
+
 
 </div>
 @endforeach
@@ -89,80 +98,76 @@ total : <span id="total{{$id}}" >{{ session()->get('price'.$id) }}</span> L.E
 <div class="side_bar" >
 @php $general_total = 0; @endphp
 
-<form action="cartinfo" >
+<form action="storeCart" >
 @foreach(session()->get('id') as $id )
- <input id="price{{$id}}" name="price{{$id}}"  readonly class="total_price" value="{{ session()->get('price'.$id) }}"><br>
- <input id="id{{$id}}" name="id{{$id}}"  readonly class="total_price" value="{{ session()->get('id'.$id) }}"><br>
- <input id="qty{{$id}}" name="qty{{$id}}"  readonly class="total_price" value="1"><br>
+
+<div style="">
+ product : <input id="name{{$id}}" name="name{{$id}}"  readonly class="total_price" value="{{ session()->get('name'.$id) }}"><br>
+ quantity : <input id="qty{{$id}}" name="qty{{$id}}"  readonly class="total_price" value="1"><br>
+ total price : <input id="price{{$id}}" name="price{{$id}}"  readonly class="total_price" value="{{ session()->get('price'.$id) }}"><br>
+
+ <input hidden id="id{{$id}}" name="id{{$id}}"  readonly class="total_price" value="{{ session()->get('id'.$id) }}">
+ <input hidden id="trader{{$id}}" name="trader{{$id}}"  readonly class="total_price" value="{{ session()->get('trader'.$id) }}">
+ <input hidden id="pic{{$id}}" name="pic{{$id}}"  readonly class="total_price" value="{{ session()->get('pic'.$id) }}">
  @php $general_total += session()->get('price'.$id); @endphp
+
+ </div><br>
 @endforeach
+
+general total : <input id="general_toal" class="total_price" readonly value="@php echo $general_total; @endphp"><br>
 <button>submit</button>
 </form>
 
- general total : <input id="general_toal" class="total_price" readonly value="@php echo $general_total; @endphp">
+ 
 </div>
 
 @endif
 
 <!-------------------------------end side bar ----------------------------------------------->
 
-<button onclick="test()"> aksjgda</button>
 
-<p id="demo"></p>
+
+ 
+
+
+
+
+
 
 <script type="text/javascript">
 	
 	
 
-function test(){
-	alert(c);
-}
 
-	function count($price,$id){
 
-		var qty = document.getElementById('select'+$id);
+function count($price,$id){
+
+var qty = document.getElementById('select'+$id);
 
 document.getElementById('total'+$id).innerHTML = qty.value * $price ;
 document.getElementById('price'+$id).value = qty.value * $price ;
 document.getElementById('qty'+$id).value = qty.value ;
 
-}
+let text = 0;
 
 
-
-var s=0;
-
-const c =[] ;
   @if(session()->get('id'))
   @foreach( session()->get('id') as $v )
-  c.push (   {!! $v !!}  )  ;
+
+  text += parseInt(document.getElementById('price'+{!! $v !!} ).value) ;
+
   @endforeach
   @endif
-document.getElementById('general_toal').value = "asdgajhsgd";
 
-  let text = 0;
+  document.getElementById("general_toal").value = text;
 
-c.forEach(myFunction);
-
-document.getElementById("demo").innerHTML = text;
- 
-function myFunction(item, index) {
-  text += parseInt(document.getElementById('total'+item).value) ; 
 }
 
 
 
 
-
-//alert($id);
-//alert(total);
-	
-
-//document.getElementById('select').addEventListener('change', function() {
-//alert(this.value);
-//});
-
 </script>
+
 
 </body>
 </html>

@@ -36,6 +36,7 @@
 	
 @if( auth()->guard('user')->user() )
 <a href="logout" class="login_link">Logout</a>
+<a href="stock" class="login_link">My stock</a>
 @else
 <a href="login" class="login_link" >Login</a>
 <a href="register" class="login_link" >Register</a>
@@ -46,12 +47,12 @@
 @endif
 
 
-
 	</div>
 
 	<!------------------------ end navbar ------------------------------------------->
 
 
+<!---------------------- products ----------------------------------------------->
 
 		@foreach($data as $v)
 		<div class="productinfo" >
@@ -79,10 +80,20 @@
          </div>
 		@endforeach
 
+<!------------------------------------------------------------------------------------>
 
 
+<div id="successMessage" class="hiddenDiv" >
 
+	<div>
 
+		  <span style="color: #00fff3;">your products submited successfully</span> <br>
+          <span >The products will delivered to you within 5 days</span> <br>
+          <button style="width: 10% ; margin-top: 10%;" onclick="hide('successMessage')" >ok</button>
+
+	</div>
+
+</div>
 
 
 
@@ -90,13 +101,19 @@
 	
 	<script type="text/javascript">
 		
-		function test(){
-			//window.scrollTo(0, document.body.scrollHeight);
-			//window.scrollTo(0,200);
-			//document.getElementById("test").scrollIntoView();
+		
+ @if(session()->get('addedToCart'))
+ var item = document.getElementById('successMessage');
+ item.style.display = 'block' ;
+ @endif
 
 
-		}
+ function hide($id){
+ 	var item = document.getElementById($id);
+ 	item.style.display = 'none' ;
+ }
+
+
 	</script>
 		
 
