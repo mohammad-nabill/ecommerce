@@ -16,8 +16,16 @@ class product extends Controller
     public function cat()
     {
         $obj = new products;
-        $data = $obj->where('category',request('cat'))->get();
+        $data = $obj->where('category',request('cat'))->orderBy('created_at' , 'desc')->get();
         return view('ecom/category',compact('data') );
+    }
+
+
+public function myProduct()
+    {
+        $obj = new products;
+        $data = $obj->where('trader', auth()->guard('user')->user()->id )->get();
+        return view('ecom/products',compact('data') );
     }
 
 
@@ -25,7 +33,7 @@ class product extends Controller
     public function index()
     {
         $obj = new products;
-        $data = $obj->get();
+        $data = $obj->orderBy('created_at' , 'desc')->get();
         return view('ecom/home',compact('data') );
     }
 

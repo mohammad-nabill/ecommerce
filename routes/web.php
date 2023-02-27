@@ -29,6 +29,9 @@ route::group(['middleware'=>'addProduct'],function(){
 
 route::resource('product','App\Http\Controllers\product');
 route::view('add','ecom/addproduct');
+route::get('myProduct','App\Http\Controllers\product@myProduct');
+route::get('orders','App\Http\Controllers\cart@orders');
+route::post('delivered','App\Http\Controllers\cart@delivered');
 
 });
 ///////////////////////////////////////////
@@ -41,6 +44,7 @@ route::resource('register','App\Http\Controllers\user');
 
 route::view('login','ecom/login');
 route::post('login','App\Http\Controllers\login@login');
+
 });
 ////////////////////////////////////
 
@@ -74,6 +78,9 @@ session()->put('id', $tarray);
 return redirect('cart');
 
 });
+
+
+route::get('ajax','App\Http\Controllers\ajax@check_email');
 
 
 

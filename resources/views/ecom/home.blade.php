@@ -44,6 +44,8 @@
 
 @if(Gate::forUser(auth()->guard('user')->user())->allows('trader', auth()->guard('user')->user() ) )
 <a href="add" class="login_link">Add</a>
+<a href="myProduct" class="login_link">My Products</a>
+<a href="orders" class="login_link">Orders</a>
 @endif
 
 
@@ -56,7 +58,7 @@
 
 		@foreach($data as $v)
 		<div class="productinfo" >
-         {{ $v->name }}<br>
+         Model : {{ $v->name }}<br>
          <img class="product_img" src="products/{{ $v->pic }}" ><br>
          <p class="product_des">{{ $v->description }}</p>
          <span class="product_price">{{ $v->price }} L.E </span>

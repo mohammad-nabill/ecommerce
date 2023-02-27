@@ -36,7 +36,7 @@
 	{!! Form::select('category',[null=>'select category','Mobile phone'=>'Mobile phone','Laptop'=>'Laptop','Desktop Computer'=>'Desktop Computer']) !!} 
 	{{ $errors->first('category') }} <br>
 
-	{!! Form::label('name : ') !!}<br>
+	{!! Form::label('model : ') !!}<br>
 	{!! Form::text('name') !!} {{ $errors->first('name') }} <br>
 
 	{!! Form::label('description : ') !!}<br>

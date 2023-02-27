@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\cart_m;
+use App\Models\products;
+
 
 class cart extends Controller
 {
@@ -46,12 +48,15 @@ session()->put('pic'.$counter,request('pic'));
 
     function add(){
     
-    
         
    
     foreach (session()->get('id') as $id ) {
 
-         
+          $obj2 = new products;
+          $data = $obj2->find($id);
+          $new_quantity = $data->quantity - request('qty'.$id);
+          $data->update(['quantity'=>$new_quantity]);
+
           $obj = new cart_m;
           $obj->product_id = request('id'.$id);
           $obj->quantity = request('qty'.$id);
@@ -96,6 +101,27 @@ session()->put('pic'.$counter,request('pic'));
        $data = $obj->where('customer',auth()->guard('user')->user()->id)->get();
 
         return view('ecom/stock',compact('data'));
+    }
+
+//////////////////////////////////////////////////////////////////////
+
+    function orders(){
+
+       $obj = new cart_m;
+
+       $data = $obj->where('trader',auth()->guard('user')->user()->id)->get();
+
+      return view('ecom/orders',compact('data'));
+    }
+    //////////////////////////////////////////////////////////////////////
+
+    function delivered (){
+      
+      $obj = new cart_m;
+      $obj->find(request('id'))->delete();
+      return back();
+
+
     }
 
 

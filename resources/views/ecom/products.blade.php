@@ -44,32 +44,31 @@
 	<!------------------------ end navbar ------------------------------------------->
 
 
-@foreach( $data as $v )
-<div class="cartProduct" >
+		@foreach($data as $v)
+		<div class="productinfo" >
+         {{ $v->name }}<br>
+         <img class="product_img" src="products/{{ $v->pic }}" ><br>
+         <p class="product_des">{{ $v->description }}</p>
+         <span class="product_price">{{ $v->price }} L.E </span>
 
-<div style="width: 20%;text-align: center;">
-<img class="cartPic"  src="products/{{ $v->product_info->pic }}">
-</div>
+         {!! Form::open(['url'=>'cart']) !!}
+         {!! Form::hidden('id', $v->id ) !!}
+         {!! Form::hidden('name', $v->name ) !!}
+         {!! Form::hidden('description', $v->description ) !!}
+         {!! Form::hidden('price',$v->price) !!}
+         {!! Form::hidden('trader',$v->traderName->id) !!}
+         {!! Form::hidden('quantity',$v->quantity) !!}
+         {!! Form::hidden('pic',$v->pic) !!}
 
-<div style="position:absolute;right: 5px;top:0">
-price : {{ $v->price }} L.E<br>
-</div>
+         <span class="addTocart_btn">{!! Form::submit('Add to cart') !!}</span>
 
-<div style="">
-name : {{ $v->product_info->name }} <br>
-</div>
+         {!! Form::close() !!}
 
-<div style="position:absolute;right: 5px;bottom:20px;">
-date : <span id="" >{{ $v->created_at->format('d/m/Y') }}</span> 
-</div>
+         <span class="trader_info">by : {{ $v->traderName->tradeName }}</span><br>
+         <span class="quantity">available : {{ $v->quantity }}</span><br>
 
-<div style="position:absolute;right: 5px;bottom:0">
-quantity : <span id="" >{{ $v->quantity }}</span> 
-</div>
-
-
-</div>
-@endforeach
+         </div>
+		@endforeach
 
 
 

@@ -102,7 +102,7 @@ total : <span id="total{{$id}}" >{{ session()->get('price'.$id) }}</span> L.E
 @foreach(session()->get('id') as $id )
 
 <div style="">
- product : <input id="name{{$id}}" name="name{{$id}}"  readonly class="total_price" value="{{ session()->get('name'.$id) }}"><br>
+ product model : <input id="name{{$id}}" name="name{{$id}}"  readonly class="total_price" value="{{ session()->get('name'.$id) }}"><br>
  quantity : <input id="qty{{$id}}" name="qty{{$id}}"  readonly class="total_price" value="1"><br>
  total price : <input id="price{{$id}}" name="price{{$id}}"  readonly class="total_price" value="{{ session()->get('price'.$id) }}"><br>
 
